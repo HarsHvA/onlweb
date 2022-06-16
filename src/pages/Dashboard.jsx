@@ -5,7 +5,6 @@ import TeacherPanel from "./DashboardPages/TeacherPanel";
 import Circulars from "./DashboardPages/Circulars";
 import Contacts from "./DashboardPages/Contacts";
 import Navbar from "../components/Navbar";
-import MobileNavbar from "../components/MobileNavbar";
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(<NotesPage />);
@@ -31,15 +30,12 @@ const Dashboard = () => {
     }
   };
   return (
-    <div className="flex flex-col h-screen  sm:flex-row m-0">
-      <div className="hidden sm:contents">
+    <div className="flex flex-col h-screen items-center m-0">
+      <div className="contents">
         <Navbar handlePage={handlePages} />
       </div>
-      <div className="flex flex-col items-center justify-center m-auto">
+      <div className="flex flex-col items-center justify-center m-auto w-11/12">
         {currentPage}
-      </div>
-      <div className="contents sm:hidden">
-        <MobileNavbar handlePage={handlePages} />
       </div>
     </div>
   );

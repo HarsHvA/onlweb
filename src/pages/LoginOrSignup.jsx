@@ -5,13 +5,13 @@ import Image1 from "../assets/images/image1.svg";
 const LoginOrSignup = () => {
     const navigate = useNavigate();
     return (
-        <div className="grid md:grid-cols-2 grid-rows-2 h-screen content-center m-auto">
+        <div className="grid md:grid-cols-2 grid-rows-2 h-screen content-center m-auto font-mono">
           <div className="flex justify-center items-center">
             <img src={Image1} alt="" className="m-auto md:h-screen"></img>
           </div>
           <div className="flex flex-col md:h-screen justify-center items-center">
             <div className="flex flex-col items-center my-8">
-              <h1 className="font-sans text-xl md:text-5xl">Online notes library</h1>
+              <h1 className="font-sans text-2xl sm:text-5xl mb-3">Online notes library</h1>
               <p className="font-sans">Telecommunication department</p>
             </div>
             <button

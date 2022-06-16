@@ -26,7 +26,7 @@ const Signup = () => {
     }
   };
   return (
-    <div className="grid md:grid-cols-2 grid-rows-2 h-screen content-center m-auto">
+    <div className="grid md:grid-cols-2 grid-rows-2 h-screen content-center m-auto font-mono">
       <div className="flex justify-center items-center">
         <img src={Image2} alt="" className="m-auto md:h-screen"></img>
       </div>
