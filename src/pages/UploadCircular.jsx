@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import Image5 from "../assets/images/image5.svg";
+import { storage, firestore } from "../Firebase";
+
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytesResumable } from "firebase/storage";
 
 const UploadCircular = () => {
+  const [fileUpload, setFileUpload] = useState(null);
+  const [fileName, setfileName] = useState("");
+  const [progress, setProgress] = useState("");
+
+  const uploadCircularStore = async () => {
+    const ref = collection(firestore, "circular");
+    await addDoc(ref, {
+      name: fileName,
+      uploaderName: "Ashutosh",
+      dateCreated: serverTimestamp(),
+    });
+  };
+
+  const uploadFile = async () => {
+    if (fileUpload == null) return;
+    const fileRef = ref(storage, `circular/${fileName}`);
+    const uploadTask = uploadBytesResumable(fileRef, fileUpload);
+    await uploadCircularStore();
+    uploadTask.on("state_changed", (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      setProgress("Upload is " + Math.round(progress) + "% done");
+      if (progress === 100) {
+        setProgress("Circular Uploaded!");
+      }
+    });
+  };
   return (
     <div className="grid md:grid-cols-2 grid-rows-2 h-screen content-center m-auto font-mono">
       <div className="flex justify-center items-center">
@@ -9,24 +39,42 @@ const UploadCircular = () => {
       </div>
       <div className="flex flex-col md:h-screen justify-center items-center">
         <form
-        // onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (fileName !== "") {
+              uploadFile();
+            }
+          }}
         >
           <h1 className="text-s text-center text-primary-dark mb-2 font-bold text-xl p-3">
             Upload circular
           </h1>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
+              Pick file
+            </label>
+            <input
+              type="file"
+              onChange={(event) => {
+                setFileUpload(event.target.files[0]);
+              }}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               Heading
             </label>
             <input
-              // onChange={handleChange}
+              onChange={(e) => {
+                setfileName(e.target.value);
+              }}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="circular"
               type="text"
               placeholder="Enter heading"
             />
           </div>
-          
 
           <div className="flex flex-col items-center ">
             <button
@@ -35,6 +83,9 @@ const UploadCircular = () => {
             >
               Upload pdf
             </button>
+            <span className="mt-2 text-s leading-normal text-black">
+              {progress}
+            </span>
           </div>
         </form>
       </div>

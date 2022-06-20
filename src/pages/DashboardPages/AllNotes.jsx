@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { firestore } from "../../Firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,8 +19,9 @@ const AllNotes = () => {
 
   useEffect(() => {
     const ref = collection(firestore, "notes");
+    const q = query(ref, orderBy("dateModified", "desc"));
     const getNotes = async () => {
-      const data = await getDocs(ref);
+      const data = await getDocs(q);
       setNotesList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
@@ -29,12 +30,11 @@ const AllNotes = () => {
   return (
     <div className="flex flex-col min-h-screen items-center justify-start bg-primary rounded-t-lg p-8 m-5 w-full font-mono">
       {notesList.map((note) => {
-        const date = Date(note.dateModified);
         return (
           <div
             className="flex row bg-white rounded-md shadow-md p-3 m-2 w-full"
             // onClick={() => {
-            //   onClickUrl(pdfUrl+note.);
+            //   window.open(INSTALL_LINK);
             // }}
           >
             <FontAwesomeIcon
@@ -46,7 +46,7 @@ const AllNotes = () => {
                 {note.name + " | module-" + note.moduleNo}
               </h1>
               <h5 className="px-3 text-xs text-primary-dark">
-                {date + " | uploaded by " + note.uploaderName}
+                {"uploaded by " + note.uploaderName}
               </h5>
             </div>
           </div>
