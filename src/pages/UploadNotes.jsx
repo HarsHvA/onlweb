@@ -10,10 +10,13 @@ import { useNavigate } from "react-router";
 
 const UploadNotes = () => {
   const navigate = useNavigate();
+  const [uploaderName, setUploaderName] = useState("");
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       const uid = user.uid;
       navigate("/unauthorized", { state: { uid: uid } });
+    } else {
+      setUploaderName(user.displayName);
     }
   });
   const [fileUpload, setFileUpload] = useState(null);
@@ -27,7 +30,7 @@ const UploadNotes = () => {
     const ref = collection(firestore, "notes");
     await addDoc(ref, {
       name: fileName,
-      uploaderName: "Ashutosh",
+      uploaderName: uploaderName,
       dateModified: serverTimestamp(),
       courseName: courseName,
       moduleNo: moduleNo,

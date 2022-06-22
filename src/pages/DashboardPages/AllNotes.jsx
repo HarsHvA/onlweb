@@ -49,18 +49,16 @@ const AllNotes = () => {
               className="text-primary h-10 p-5"
             />
             <div className="flex flex-col  justify-center">
-              <button>
-                <h1
-                  className="px-3 py-2 text-primary-dark"
-                  onClick={() => {
-                    openDocument(note.name);
-                  }}
-                >
-                  {note.name + " | module-" + note.moduleNo}
-                </h1>
-              </button>
+              <h1
+                className="px-3 py-2 text-primary-dark"
+                onClick={() => {
+                  openDocument(note.name);
+                }}
+              >
+                {note.name + " | module-" + note.moduleNo}
+              </h1>
               <h5 className="px-3 text-xs text-primary-dark">
-                {"uploaded by " + note.uploaderName}
+                {note.courseName + " | uploaded by " + note.uploaderName}
               </h5>
               <h1
                 className="px-3 underline py-2 text-xs text-primary-dark"

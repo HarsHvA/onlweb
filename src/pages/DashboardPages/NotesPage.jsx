@@ -44,18 +44,16 @@ const NotesPage = () => {
               className="text-primary h-10 p-5"
             />
             <div className="flex flex-col  justify-center text-primary-dark">
-              <button>
-                <h1
-                  className="px-3 py-2"
-                  onClick={() => {
-                    openDocument(note.name);
-                  }}
-                >
-                  {note.name + " | module-" + note.moduleNo}
-                </h1>
-              </button>
+              <h1
+                className="px-3 py-2"
+                onClick={() => {
+                  openDocument(note.name);
+                }}
+              >
+                {note.name + " | module-" + note.moduleNo}
+              </h1>
               <h5 className="px-3 text-xs">
-                {"uploaded by " + note.uploaderName}
+                {note.courseName + " |uploaded by " + note.uploaderName}
               </h5>
             </div>
           </div>
