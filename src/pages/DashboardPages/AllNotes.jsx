@@ -3,6 +3,8 @@ import { firestore } from "../../Firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { storage } from "../../Firebase";
+import { getDownloadURL, ref } from "firebase/storage";
 
 const AllNotes = () => {
   const [notesList, setNotesList] = useState([]);
@@ -16,6 +18,17 @@ const AllNotes = () => {
   // const onClickUrl = (url) => {
   //   return () => openInNewTab(url);
   // };
+
+  const openDocument = (name) => {
+    const storag = storage;
+    getDownloadURL(ref(storag, "notes/" + name))
+      .then((url) => {
+        window.open(url);
+      })
+      .catch((error) => {
+        console.log(error.toString());
+      });
+  };
 
   useEffect(() => {
     const ref = collection(firestore, "notes");
@@ -32,10 +45,11 @@ const AllNotes = () => {
       {notesList.map((note) => {
         return (
           <div
+            key={note.name}
             className="flex row bg-white rounded-md shadow-md p-3 m-2 w-full"
-            // onClick={() => {
-            //   window.open(INSTALL_LINK);
-            // }}
+            onClick={() => {
+              openDocument(note.name);
+            }}
           >
             <FontAwesomeIcon
               icon={faFilePdf}

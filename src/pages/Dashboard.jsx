@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router";
 import AllNotes from "./DashboardPages/AllNotes";
 import NotesPage from "./DashboardPages/NotesPage";
 import TeacherPanel from "./DashboardPages/TeacherPanel";
@@ -8,6 +9,8 @@ import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(<NotesPage />);
+  const { state } = useLocation();
+  const { uid } = state;
   const handlePages = (pageIndex) => {
     switch (pageIndex) {
       case 0:
@@ -32,7 +35,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col h-screen items-center m-0">
       <div className="contents">
-        <Navbar handlePage={handlePages} />
+        <Navbar handlePage={handlePages} uid={uid} />
       </div>
       <div className="flex flex-col items-center justify-center m-auto w-11/12">
         {currentPage}

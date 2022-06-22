@@ -42,9 +42,12 @@ const Contacts = () => {
   ];
   return (
     <div className="flex flex-col min-h-screen items-center justify-start bg-primary rounded-t-lg p-8 m-5 w-full font-mono">
-      {contacts.map((contact) => {
+      {contacts.map((contact, index) => {
         return (
-          <div className="flex row bg-white rounded-md shadow-md p-3 m-2 w-full">
+          <div
+            className="flex row bg-white rounded-md shadow-md p-3 m-2 w-full"
+            key={index}
+          >
             <FontAwesomeIcon
               icon={faUserCircle}
               className="text-primary h-10 p-5"
@@ -52,7 +55,7 @@ const Contacts = () => {
             <div
               className="flex flex-col  justify-center text-primary-dark"
               onClick={(e) => {
-                window.location.href = "mailto:"+ contact.Email;
+                window.location.href = "mailto:" + contact.Email;
                 e.preventDefault();
               }}
             >

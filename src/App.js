@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import UploadNotes from "./pages/UploadNotes";
 import UploadCircular from "./pages/UploadCircular";
+import LogoutPage from "./pages/LogoutPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/forgotpassword" to element={<ForgotPassword />} />
         <Route path="/uploadnotes" to element={<UploadNotes />} />
         <Route path="/uploadcircular" to element={<UploadCircular />} />
+        <Route path="/logout" to element={<LogoutPage />} />
       </Routes>
     </Router>
   );
