@@ -14,7 +14,7 @@ import { doc, getDoc, collection } from "firebase/firestore";
 import { auth, firestore } from "../Firebase";
 
 const Navbar = (props) => {
-  var [currentPage, setCurrentPage] = useState("My Notes");
+  var [currentPage, setCurrentPage] = useState("All Notes");
   var [isTeacher, setIsteacher] = useState(false);
   const navigate = useNavigate();
 
@@ -55,33 +55,33 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="object-top h-screen flex flex-col font-mono">
+    <div className="object-top  flex flex-col font-mono">
       <h1 className="ml-10 mt-10 mx-4 text-3xl text-center  text-primary-dark font-bold">
         {currentPage}
       </h1>
       <ul className="ml-10 mt-10 text-3xl flex flex-row text-primary">
-        <li className="flex w-full mx-4 justify-between p-2  cursor-pointer items-center">
-          <div
-            className="flex items-center"
-            onClick={() => {
-              props.handlePage(0);
-              setCurrentPage("My Notes");
-            }}
-          >
-            <FontAwesomeIcon icon={faUserNinja} />
-            <span className="text-sm  ml-2">My notes</span>
-          </div>
-        </li>
         <li className="flex w-full mx-4 p-2 justify-between  cursor-pointer items-center">
           <div
             className="flex items-center"
             onClick={() => {
-              props.handlePage(1);
+              props.handlePage(0);
               setCurrentPage("All Notes");
             }}
           >
             <FontAwesomeIcon icon={faBook} />
             <span className="text-sm  ml-2">All Notes</span>
+          </div>
+        </li>
+        <li className="flex w-full mx-4 justify-between p-2  cursor-pointer items-center">
+          <div
+            className="flex items-center"
+            onClick={() => {
+              props.handlePage(1);
+              setCurrentPage("My Notes");
+            }}
+          >
+            <FontAwesomeIcon icon={faUserNinja} />
+            <span className="text-sm  ml-2">My notes</span>
           </div>
         </li>
         <Dash />

@@ -4,8 +4,18 @@ import { storage, firestore } from "../Firebase";
 
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytesResumable } from "firebase/storage";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase";
+import { useNavigate } from "react-router";
 
 const UploadCircular = () => {
+  const navigate = useNavigate();
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      const uid = user.uid;
+      navigate("/unauthorized", { state: { uid: uid } });
+    }
+  });
   const [fileUpload, setFileUpload] = useState(null);
   const [fileName, setfileName] = useState("");
   const [progress, setProgress] = useState("");

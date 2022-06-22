@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { auth } from "../Firebase";
 import Image3 from "../assets/images/image3.svg";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const ForgotPassword = () => {
+  const [email, setEmail] = useState("");
+  const [msg, setMsg] = useState("");
   return (
     <div className="grid md:grid-cols-2 grid-rows-2 h-screen content-center m-auto font-mono">
       <div className="flex justify-center items-center">
@@ -9,14 +13,25 @@ const ForgotPassword = () => {
       </div>
       <div className="flex flex-col md:h-screen justify-center items-center">
         <form
-        // onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            e.preventDefault();
+            sendPasswordResetEmail(auth, email)
+              .then(() => {
+                setMsg("Password reset email sent!!");
+              })
+              .catch((error) => {
+                setMsg(error.toString());
+              });
+          }}
         >
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Enter registered email
             </label>
             <input
-              // onChange={handleChange}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
               type="text"
@@ -32,6 +47,7 @@ const ForgotPassword = () => {
             </button>
           </div>
         </form>
+        <span className="mt-2 text-s p-2 leading-normal text-black">{msg}</span>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import Image2 from "../assets/images/image2.svg";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../Firebase";
 import { firestore } from "../Firebase";
@@ -17,32 +18,50 @@ const Signup = () => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerName, setRegisterName] = useState("");
-  const [registerUsn, setRegisterUsn] = useState("hghjbjbjbjbj");
+  const [registerUsn, setRegisterUsn] = useState("");
   const [msg, setMsg] = useState("");
 
-  function sleep(duration) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, duration);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      storeService(uid);
+    }
+  });
+
+  const storeService = async (uid) => {
+    await createUser(uid);
+    sendEmailVerification(auth.currentUser).then(() => {
+      setMsg(
+        "Successfully signed up! A verification mail has been sent please verify and login!"
+      );
     });
-  }
+  };
 
   const register = async () => {
-    try {
-      await createUserWithEmailAndPassword(
-        auth,
-        registerEmail,
-        registerPassword
-      );
-      let user = auth.currentUser;
-      await sleep(2000);
-      await createUser(user.uid);
-      sendEmailVerification(auth.currentUser).then(() => {
-        setMsg(
-          "Successfully signed up! A verification mail has been sent please verify and login!"
+    if (isTeacher) {
+      if (registerEmail.toLocaleUpperCase().includes("dsce.edu.in")) {
+        try {
+          await createUserWithEmailAndPassword(
+            auth,
+            registerEmail,
+            registerPassword
+          );
+        } catch (error) {
+          setMsg(error.toString());
+        }
+      } else {
+        setMsg("Please use a valid teacher email id");
+      }
+    } else {
+      try {
+        await createUserWithEmailAndPassword(
+          auth,
+          registerEmail,
+          registerPassword
         );
-      });
-    } catch (error) {
-      setMsg(error.toString());
+      } catch (error) {
+        setMsg(error.toString());
+      }
     }
   };
 

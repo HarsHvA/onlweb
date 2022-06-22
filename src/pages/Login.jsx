@@ -9,26 +9,19 @@ const Login = () => {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [msg, setMsg] = useState("");
-  const [user, setUser] = useState({});
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      navigate("/dashboard", { state: { uid: uid } });
+    }
   });
-
-  function sleep(duration) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, duration);
-    });
-  }
 
   const login = async () => {
     try {
       setMsg("Logging in...");
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      await sleep(2000);
-      console.log("uuudi :" + user.uid);
-      setMsg("Logged in");
-      navigate("/dashboard", { state: { uid: user.uid } });
+      setMsg("Logged in redirecting...");
     } catch (error) {
       setMsg(error.toString());
     }

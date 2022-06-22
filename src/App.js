@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UploadNotes from "./pages/UploadNotes";
 import UploadCircular from "./pages/UploadCircular";
 import LogoutPage from "./pages/LogoutPage";
+import UnauthorizedPage from "./pages/Unauthorized";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/uploadnotes" to element={<UploadNotes />} />
         <Route path="/uploadcircular" to element={<UploadCircular />} />
         <Route path="/logout" to element={<LogoutPage />} />
+        <Route path="/unauthorized" to element={<UnauthorizedPage />} />
       </Routes>
     </Router>
   );

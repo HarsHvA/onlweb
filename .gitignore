@@ -61,3 +61,7 @@ packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 src/Firebase.js
+firebase.json
+.firebase/hosting.YnVpbGQ.cache
+firebase.json
+.gitignore
